@@ -1,5 +1,4 @@
 import os
-from bs4 import BeautifulSoup
 from PIL import Image
 import urllib3
 from pyzbar.pyzbar import decode
@@ -15,16 +14,16 @@ import email.header
 import sys
 
 cwd = os.getcwd()
-account_sid = 'AC4bef6ce466b9602470b7e00ed16f5f07'
-auth_token = 'd7b29e6fffa8d545794ba440f8e5dfff'
+account_sid = 'account_sid'
+auth_token = 'auth_token'
 client = Client(account_sid, auth_token)
 
-#dir_names = ["Anjuli", "Sean", "Ananya", "Kellen"]
+
 
 dict_of_emails = {
-	"Anjuli": [],
-	"Sean": [],
-	"Ananya": [],
+	"name_friend1": [],
+	"name_friend2": [],
+	"name_friend2": [],
 	"Kellen": [],
 }
 
@@ -50,8 +49,8 @@ def decodeQR(file:str):
 def textME(txt):
 	message = client.messages.create(
 						 body=txt,
-						 from_='+16782637103',
-						 to='+17703627864'
+						 from_='from#',
+						 to='to#'
 					 )
 
 	print(message.sid)
@@ -83,7 +82,7 @@ def send_mail(send_from: str, subject: str, text: str,
 
 	smtp = smtplib.SMTP(host="smtp.gmail.com", port= 587) 
 	smtp.starttls()
-	smtp.login("kellenscoupons1","coupons12345")
+	smtp.login("email","password")
 	smtp.sendmail(send_from, send_to, msg.as_string())
 	smtp.close()
 
@@ -94,8 +93,8 @@ def send_mail(send_from: str, subject: str, text: str,
 
 def downloadAttachments(subject: str):
 	host = 'imap.gmail.com'
-	user = 'kellenscoupons1@gmail.com'
-	password = 'coupons12345'
+	user = 'email@gmail.com'
+	password = 'password'
 
 	# Connect to the server
 	print('Connecting to ' + host)
@@ -143,7 +142,7 @@ def downloadAttachments(subject: str):
 			for item in dict_of_emails:
 				#print(from_email)
 				temp = []
-				if item.lower() in from_email.lower() or(item.lower() == "sean" and "crowley" in from_email):
+				if item.lower() in from_email.lower():
 					#print(subject)
 					dict_of_emails[item].append(email_message)
 				#print(email_message.walk())
@@ -217,7 +216,7 @@ def downloadAttachments(subject: str):
 for i in range(17):
 	makeQR("128-"+str(i*15)+"-"+str(i*30),"test", 'images/qr'+str(i)+'.png')
 	decodeQR(cwd+"\images\qr"+str(i)+".png")
-	send_mail("kellenscoupons1@gmail.com", "Christmas", str(i), ["kellenscoupons1@gmail.com"], [cwd+"\images\qr"+str(i)+".png"])
-downloadAttachments("Christmas")
+	send_mail("testemail@gmail.com", "test", str(i), ["testemail@gmail.com"], [cwd+"\images\qr"+str(i)+".png"])
+downloadAttachments("test")
 #textME("done")
 
