@@ -117,7 +117,7 @@ def downloadAttachments(subject: str):
 	i = len(id_list)
 	for x in range(i):
 		latest_email_uid = id_list[x]
-		if(i > 15 && x < i-5):
+		if(i > 15 and x < i-5):
 			temp = "\ ".strip()+"\ ".strip()+'Deleted'
 			print(temp)
 			mailBox.uid('STORE', latest_email_uid, "+FLAGS", "(\\Deleted)")
